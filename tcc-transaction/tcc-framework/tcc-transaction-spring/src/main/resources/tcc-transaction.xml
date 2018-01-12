@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+
+
+	<!-- 开启Spring对@AspectJ风格切面的支持(因为下面用到自定义的TCC补偿切面类) -->
+	<!-- @Aspect注解不能被Spring自动识别并注册为Bean,因此要通过xml的bean配置,或通过@Compenent注解标识其为Spring管理Bean -->
+    <aop:aspectj-autoproxy/>
+
+    <context:component-scan base-package="org.mengyun.tcctransaction.spring"/>
+
+    <bean id="springBeanFactory" class="org.mengyun.tcctransaction.spring.support.SpringBeanFactory"/>
+
+
+    <!-- TCC事务配置器 -->
+    <bean id="tccTransactionConfigurator" class="org.mengyun.tcctransaction.spring.support.TccTransactionConfigurator">
+    </bean>
+
+	<!-- 事务恢复 -->
+    <bean id="transactionRecovery" class="org.mengyun.tcctransaction.recover.TransactionRecovery">
+        <property name="transactionConfigurator" ref="tccTransactionConfigurator"/>
+    </bean>
+
+	<!-- 可补偿事务拦截器 -->
+    <bean id="compensableTransactionInterceptor"
+          class="org.mengyun.tcctransaction.interceptor.CompensableTransactionInterceptor">
+        <property name="transactionConfigurator" ref="tccTransactionConfigurator"/>
+    </bean>
+
+	<!-- 资源协调拦截器 -->
+    <bean id="resourceCoordinatorInterceptor"
+          class="org.mengyun.tcctransaction.interceptor.ResourceCoordinatorInterceptor">
+        <property name="transactionConfigurator" ref="tccTransactionConfigurator"/>
+    </bean>
+
+	<!-- TCC补偿切面 -->
+    <bean id="tccCompensableAspect" class="org.mengyun.tcctransaction.spring.TccCompensableAspect">
+        <property name="compensableTransactionInterceptor" ref="compensableTransactionInterceptor"/>
+    </bean>
+
+	<!-- TCC事务上下文切面 -->
+    <bean id="transactionContextAspect" class="org.mengyun.tcctransaction.spring.TccTransactionContextAspect">
+        <property name="resourceCoordinatorInterceptor" ref="resourceCoordinatorInterceptor"/>
+    </bean>
+
+	<!-- 启用定时任务注解 -->
+    <task:annotation-driven/>
+
+	<!-- 事务恢复任务调度器 -->
+    <bean id="recoverScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"/>
+
+	<!-- 事务恢复调度任务，初始化方法：init -->
+    <bean id="recoverScheduledJob" class="org.mengyun.tcctransaction.spring.recover.RecoverScheduledJob" init-method="init">
+        <property name="transactionConfigurator" ref="tccTransactionConfigurator"/>
+        <property name="transactionRecovery" ref="transactionRecovery"/>
+        <property name="scheduler" ref="recoverScheduler"/>
+    </bean>
+
+</beans>

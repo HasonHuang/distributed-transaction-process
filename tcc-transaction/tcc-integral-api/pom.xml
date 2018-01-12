@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.hason.dtp</groupId>
+    <artifactId>tcc-integral-api</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>TCC :: Integral System API</name>
+
+    <properties>
+        <ms-core.version>1.0-SNAPSHOT</ms-core.version>
+        <ms-accout-api.version>1.0-SNAPSHOT</ms-accout-api.version>
+        <jpa.version>1.0.0.Final</jpa.version>
+        <spring.version>4.3.5.RELEASE</spring.version>
+        <feign-form.version>3.0.3</feign-form.version>
+
+        <!-- Plugin的属性 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <!-- 内部项目 -->
+        <dependency>
+            <groupId>com.hason.dtp</groupId>
+            <artifactId>ms-core</artifactId>
+            <version>${ms-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hason.dtp</groupId>
+            <artifactId>tcc-account-api</artifactId>
+            <version>${ms-accout-api.version}</version>
+        </dependency>
+        <!-- 内部项目 end -->
+
+        <!-- Feign 支持表单提交 -->
+        <dependency>
+            <groupId>io.github.openfeign.form</groupId>
+            <artifactId>feign-form</artifactId>
+            <version>${feign-form.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign.form</groupId>
+            <artifactId>feign-form-spring</artifactId>
+            <version>${feign-form.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
+            <version>9.3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>${jpa.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+
+</project>

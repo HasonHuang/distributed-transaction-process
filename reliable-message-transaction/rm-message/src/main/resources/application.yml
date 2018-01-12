@@ -1,0 +1,74 @@
+server:
+  port: 8010
+
+# 配置日志级别，让 hibernate 打印执行的SQL
+logging:
+  level:
+    root: INFO
+    org.hibernate: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.hibernate.type.descriptor.sql.BasicExtractor: TRACE
+debug: true
+
+spring:
+  application:
+    name: rm-message
+
+  # 数据库配置
+  datasource:
+    url: jdbc:postgresql://localhost:5432/distributed_transaction_db
+    username: postgres
+    password: 123456
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: org.postgresql.Driver
+
+    initialize: false             # 是否初始化
+    platform: postgresql          # 指定数据源类型
+    schema: classpath:schema.sql  # 指定建表脚本
+#    data: classpath:data.sql      # 指定数据脚本
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+
+  # 配置 RabbitMQ 消息队列：队列配置见底部
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
+
+eureka:
+  instance:
+    # 将自己的IP注册到 Eureka Server，false 表示注册微服务所在操作系统的 hostname 到 Eureka Server
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      # 服务注册（无需密码）
+      defaultZone: http://localhost:8761/eureka
+      # 服务注册（需要密码），格式：http://username:password@EUREKA_HOST:EUREKA_PORT/eureka/
+#      defaultZone: http://user:password123@localhost:8761/eureka/
+
+# 禁用 Feign 的 Hystrix，不使用断路器
+feign:
+  hystrix:
+    enabled: false
+
+# 配置队列名称，创建队列的任务由 com.hason.dtp.account.config.MQConfig 完成
+queue:
+  message:
+    # 用户积分计算队列
+    userPointQueue: ms-dtp-user-point-queue
+    # 消息生存时间，单位：秒（消息存放超过这个时间才可以取出处理）
+    expire: 180
+    retry:
+      # 最大重试次数（包含）
+      max: 3
+      # 重发间隔，单位：分钟
+      duration:
+        1: 0
+        2: 1
+        3: 2
+        4: 5
+        5: 15
