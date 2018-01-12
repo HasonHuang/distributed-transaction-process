@@ -17,6 +17,7 @@
         <module>tcc-account</module>
         <module>tcc-integral</module>
         <module>tcc-framework</module>
+        <module>tcc-capital</module>
     </modules>
 
 </project>

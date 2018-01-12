@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.hason.dtp</groupId>
-    <artifactId>tcc-integral</artifactId>
+    <artifactId>tcc-capital</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <parent>
@@ -16,7 +16,7 @@
 
     <properties>
         <ms-core.version>1.0-SNAPSHOT</ms-core.version>
-        <tcc-integral-api.version>1.0-SNAPSHOT</tcc-integral-api.version>
+        <tcc-capital-api.version>1.0-SNAPSHOT</tcc-capital-api.version>
         <tcc.version>1.1.5.2</tcc.version>
         <postgresql.version>42.1.1</postgresql.version>
         <druid.version>1.1.0</druid.version>
@@ -37,8 +37,8 @@
         </dependency>
         <dependency>
             <groupId>com.hason.dtp</groupId>
-            <artifactId>tcc-integral-api</artifactId>
-            <version>${tcc-integral-api.version}</version>
+            <artifactId>tcc-capital-api</artifactId>
+            <version>${tcc-capital-api.version}</version>
         </dependency>
         <!-- 内部项目 end -->
 
@@ -60,6 +60,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

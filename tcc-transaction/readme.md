@@ -14,22 +14,39 @@
 
 ## 示例演示
 
+### 初始化
+
+1. 执行`dbscripts`目录下的sql脚本（PostgreSQL）创建数据库。
+2. 修改`tcc-account`的TCC数据源、业务系统数据源
+3. 修改`tcc-integral`的TCC数据源、业务系统数据源
+
 ### 单层嵌套事务
 
 #### 业务流程
 
 1. 打开注册页面 http://localhost:9000/users/register
 2. 输入用户信息并注册
-3. 系统创建用户，同时创建资金账户和积分账户；
+3. 系统创建用户，同时创建资金账户和积分账户，其中一个创建失败都将会引起事务回退；
+
+创建资金账户和创建积分账户的操作，都在`tcc-account`项目中调用执行，该业务属于单层事务嵌套。
 
 #### 启动顺序
 
 1. 启动 ms-discovery-eureka
-2. 启动 tcc-account、tcc-integral
+2. 启动 tcc-account、tcc-integral、tcc-capital
 
 ### 多层嵌套事务
 
-2. 用户充值：用户为资金账户充值，生成订单，充值成功后增加账户资金，修改相应的积分。
+1. 打开充值页面 http://localhost:9000/users/recharge
+2. 输入用户名和充值金额进行充值
+3. `tcc-account`调用微服务`tcc-capital`生成订单并增加资金，后者操作成功后调用积分服务`tcc-integral`增加积分。
+
+调用链 `tcc-account` -> `tcc-capital` -> `tcc-integral`，该业务属于多层事务嵌套。
+
+#### 启动顺序
+
+1. 启动 ms-discovery-eureka
+2. 启动 tcc-account、tcc-integral、tcc-capital
 
 ## 一些问题
 

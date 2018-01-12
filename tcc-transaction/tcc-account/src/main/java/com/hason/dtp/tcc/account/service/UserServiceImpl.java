@@ -1,10 +1,15 @@
 package com.hason.dtp.tcc.account.service;
 
 import com.hason.dtp.core.support.tcc.TransactionEntity;
+import com.hason.dtp.core.utils.result.Result;
 import com.hason.dtp.tcc.account.dao.UserRepository;
 import com.hason.dtp.tcc.account.entity.User;
+import com.hason.dtp.tcc.account.service.proxy.CapitalServiceClientProxy;
 import com.hason.dtp.tcc.account.service.proxy.PointServiceClientProxy;
+import com.hason.dtp.tcc.capital.entity.CapitalAccount;
+import com.hason.dtp.tcc.integral.entity.Point;
 import org.mengyun.tcctransaction.Compensable;
+import org.mengyun.tcctransaction.api.TransactionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +35,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PointServiceClientProxy pointServiceClientProxy;
+    @Autowired
+    private CapitalServiceClientProxy capitalServiceClientProxy;
 
     @Autowired
     private UserRepository userRepository;
@@ -48,10 +55,17 @@ public class UserServiceImpl implements UserService {
         user.setModifiedTime(user.getCreateTime());
         user = save(user);
 
-        // 注册积分账户
-        pointServiceClientProxy.create(null, user);
+        // 注册积分账户，如果失败则抛出错误
+        Result<Point> pointResult = pointServiceClientProxy.create(null, user);
+        if (!pointResult.success()) {
+            notFalse(pointResult.success(), "service.fail", pointResult.getError().getMessage());
+        }
 
-        // 注册资金账户
+        // 注册资金账户，如果失败则抛出错误
+        Result<CapitalAccount> capitalResult = capitalServiceClientProxy.create(null, user);
+        if (!capitalResult.success()) {
+            notFalse(capitalResult.success(), "service.fail", pointResult.getError().getMessage());
+        }
 
         return user;
     }
