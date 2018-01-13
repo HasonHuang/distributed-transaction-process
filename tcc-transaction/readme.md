@@ -16,9 +16,10 @@
 
 ### 初始化
 
-1. 执行`dbscripts`目录下的sql脚本（PostgreSQL）创建数据库。
-2. 修改`tcc-account`的TCC数据源、业务系统数据源
-3. 修改`tcc-integral`的TCC数据源、业务系统数据源
+1. 下载[完整项目](../../distributed-transaction-process)
+2. 执行[dbscripts](dbscripts)目录下的sql脚本（PostgreSQL）创建数据库。
+3. 修改`tcc-account`的TCC数据源、业务系统数据源
+4. 修改`tcc-integral`的TCC数据源、业务系统数据源
 
 ### 单层嵌套事务
 

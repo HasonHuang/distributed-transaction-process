@@ -1,11 +1,10 @@
 # 分布式事务解决方案
 
-## 可靠消息服务
+常见的解决方案有：可靠消息最终一致性、最大努力通知型、TCC补偿性，项目示例基于`Spring Cloud`实现可靠消息最终一致性和TCC补偿性。
 
-### 启动顺序
+## 模块说明
 
-1. 启动 ms-discovery-eureka
-2. 启动 rm-message、rm-account、rm-account-web、rm-account-point
-3. 启动 rm-message-consumer
-
-## 最大努力通知
+- ms-core：公共模块
+- ms-discovery-eureka：服务注册与发现
+- reliable-message-transaction：可靠消息最终一致性的示例
+- tcc-transaction：TCC补偿性的示例
