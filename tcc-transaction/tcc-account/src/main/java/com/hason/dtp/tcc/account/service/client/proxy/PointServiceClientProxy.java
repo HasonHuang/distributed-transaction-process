@@ -1,4 +1,4 @@
-package com.hason.dtp.tcc.account.service.proxy;
+package com.hason.dtp.tcc.account.service.client.proxy;
 
 import com.hason.dtp.core.support.tcc.TransactionEntity;
 import com.hason.dtp.core.utils.result.Result;

@@ -52,4 +52,12 @@ public interface UserService {
      */
     User get(Long userId);
 
+    /**
+     * 获取用户
+     *
+     * @param username 用户名
+     * @return User
+     */
+    User get(String username);
+
 }

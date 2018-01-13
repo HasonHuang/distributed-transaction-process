@@ -10,13 +10,13 @@
 - tcc-order：订单模块
 - tcc-capital：资金账户模块
 - tcc-integral：积分模块
-- tcc-framework：tcc框架，整合了tcc-transaction v1.1.5版本，并解决了一些问题，如：Kryo反序列化兼容`spring-boot-devtools`
+- tcc-framework：TCC框架，整合了tcc-transaction v1.1.5版本（源代码没有注释），并解决了一些问题，如：Kryo反序列化兼容`spring-boot-devtools`
 
 ## 示例演示
 
 ### 初始化
 
-1. 下载[完整项目](../)
+1. 下载[完整项目](https://github.com/HasonHuang/distributed-transaction-process)
 2. 执行[dbscripts](dbscripts)目录下的sql脚本（PostgreSQL）创建数据库。
 3. 修改`tcc-account`的TCC数据源、业务系统数据源
 4. 修改`tcc-integral`的TCC数据源、业务系统数据源

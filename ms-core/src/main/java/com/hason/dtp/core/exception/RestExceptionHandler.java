@@ -42,6 +42,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(result, headers, HttpStatus.valueOf(ex.getCode().getHttpStatus()));
     }
 
+    /**
+     * 处理 {@link CheckException}
+     */
     @ExceptionHandler(value = { CheckException.class })
     public final ResponseEntity<Result> handleCheckException(CheckException ex, HttpServletRequest request) {
         // 注入servletRequest，用于出错时打印请求URL与来源地址

@@ -8,6 +8,7 @@ import com.hason.dtp.tcc.integral.api.PointApi;
 import com.hason.dtp.tcc.integral.entity.Point;
 import com.hason.dtp.tcc.integral.service.PointService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,4 +34,11 @@ public class PointController implements PointApi {
         return ResultBuilder.newInstance(pointService.create(entity.getContext(), entity.getBody()));
     }
 
+    @PostMapping(value = "//users/{userId}/points",
+            consumes = APPLICATION_JSON_UTF8_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
+    @Override
+    public Result<?> incr(@PathVariable("userId") Long userId, @RequestBody TransactionEntity<Long> entity) {
+        pointService.incr(entity.getContext(), userId, entity.getBody());
+        return ResultBuilder.newInstance();
+    }
 }

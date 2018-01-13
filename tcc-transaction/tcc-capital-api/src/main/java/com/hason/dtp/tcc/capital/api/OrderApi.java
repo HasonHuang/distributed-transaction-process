@@ -3,44 +3,32 @@ package com.hason.dtp.tcc.capital.api;
 import com.hason.dtp.core.support.tcc.TransactionEntity;
 import com.hason.dtp.core.utils.result.Result;
 import com.hason.dtp.tcc.account.entity.User;
+import com.hason.dtp.tcc.capital.dto.CreateOrderDto;
 import com.hason.dtp.tcc.capital.entity.CapitalAccount;
 import com.hason.dtp.tcc.capital.entity.CapitalOrder;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.math.BigDecimal;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
- * 资金账户 API
+ * 订单 API
  *
  * @author Huanghs
  * @since 2.0
- * @date 2018/1/12
+ * @date 2018/1/13
  */
-public interface CapitalApi {
+public interface OrderApi {
 
     /**
-     * 为用户创建资金账户
+     * 创建订单
      *
-     * @param entity 事务实体
+     * @param entity 订单参数
      * @return {@code Result<CapitalAccount>}
      */
-    @RequestMapping(value = "/capitals/accounts", method = POST,
+    @RequestMapping(value = "/capitals/orders", method = POST,
             consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    Result<CapitalAccount> create(@RequestBody TransactionEntity<User> entity);
-
-    /**
-     * 用户充值
-     *
-     * @param entity 事务实体
-     * @return {@code Result<CapitalOrder>}
-     */
-    @RequestMapping(value = "/capitals/accounts/balance", method = POST,
-            consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    Result<?> recharge(@RequestBody TransactionEntity<CapitalOrder> entity);
+    Result<CapitalOrder> create(@RequestBody CreateOrderDto<User> entity);
 
 }

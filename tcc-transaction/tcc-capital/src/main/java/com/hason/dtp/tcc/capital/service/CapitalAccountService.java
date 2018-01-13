@@ -2,6 +2,7 @@ package com.hason.dtp.tcc.capital.service;
 
 import com.hason.dtp.tcc.account.entity.User;
 import com.hason.dtp.tcc.capital.entity.CapitalAccount;
+import com.hason.dtp.tcc.capital.entity.CapitalOrder;
 import org.mengyun.tcctransaction.api.TransactionContext;
 
 /**
@@ -39,5 +40,33 @@ public interface CapitalAccountService {
      * @return CapitalAccount
      */
     CapitalAccount cancelCreate(TransactionContext context, User user);
+
+
+    /**
+     * (TCC-try) 用户充值
+     *
+     * @param context 事务上下文
+     * @param order 资金账户订单
+     * @return CapitalAccount
+     */
+    void recharge(TransactionContext context, CapitalOrder order);
+
+    /**
+     * (TCC-confirm) 确认用户充值，仅供框架自动调用
+     *
+     * @param context 事务上下文
+     * @param order 资金账户订单
+     * @return CapitalAccount
+     */
+    void confirmRecharge(TransactionContext context, CapitalOrder order);
+
+    /**
+     * (TCC-cancel) 撤销用户充值，仅供框架自动调用
+     *
+     * @param context 事务上下文
+     * @param order 资金账户订单
+     * @return CapitalAccount
+     */
+    void cancelRecharge(TransactionContext context, CapitalOrder order);
 
 }

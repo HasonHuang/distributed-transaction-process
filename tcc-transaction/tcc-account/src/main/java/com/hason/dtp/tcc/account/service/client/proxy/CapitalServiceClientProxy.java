@@ -1,13 +1,16 @@
-package com.hason.dtp.tcc.account.service.proxy;
+package com.hason.dtp.tcc.account.service.client.proxy;
 
 import com.hason.dtp.core.support.tcc.TransactionEntity;
 import com.hason.dtp.core.utils.result.Result;
 import com.hason.dtp.tcc.account.entity.User;
 import com.hason.dtp.tcc.account.service.client.CapitalAccountServiceClient;
 import com.hason.dtp.tcc.capital.entity.CapitalAccount;
+import com.hason.dtp.tcc.capital.entity.CapitalOrder;
 import org.mengyun.tcctransaction.api.TransactionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
 
 /**
  * 资金账户的服务代理客户端
@@ -29,6 +32,13 @@ public class CapitalServiceClientProxy {
      */
     public Result<CapitalAccount> create(TransactionContext context, User user) {
         return capitalAccountServiceClient.create(new TransactionEntity<>(context, user));
+    }
+
+    /**
+     * 充值
+     */
+    public Result<?> recharge(TransactionContext context, CapitalOrder order) {
+        return capitalAccountServiceClient.recharge(new TransactionEntity<>(context, order));
     }
 
 }

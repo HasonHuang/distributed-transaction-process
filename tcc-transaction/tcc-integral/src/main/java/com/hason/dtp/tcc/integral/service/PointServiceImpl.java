@@ -45,23 +45,49 @@ public class PointServiceImpl implements PointService {
 
     @Transactional(readOnly = true)
     @Override
-    public Point confirmCreate(TransactionContext context, User user) {
+    public void confirmCreate(TransactionContext context, User user) {
         LOGGER.debug("开始确认用户[{}]积分信息", user.getUsername());
         // 实现幂等性
         // 已经插入记录了，确认方法无需做任何事情
-        return pointRepository.findByUserId(user.getId());
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public Point cancelCreate(TransactionContext context, User user) {
+    public void cancelCreate(TransactionContext context, User user) {
         LOGGER.debug("开始取消用户[{}]积分信息", user.getUsername());
         // 实现幂等性
         Point point = pointRepository.findByUserId(user.getId());
         if (point != null) {
             pointRepository.delete(point.getId());
         }
-        return point;
     }
 
+    @Compensable(confirmMethod = "confirmIncr", cancelMethod = "cancelIncr")
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void incr(TransactionContext context, Long userId, Long increment) {
+        notNull(userId, "arg.null", "用户ID");
+        notNull(increment, "arg.null", "积分增量");
+
+        Point point = pointRepository.findByUserId(userId);
+        notNull(point, "service.fail", "用户不存在积分账户");
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void confirmIncr(TransactionContext context, Long userId, Long increment) {
+        LOGGER.debug("开始确认用户[{}]的积分增量[{}]", userId, increment);
+
+        // TCC 操作中，参数检验的步骤在 try 阶段执行，其他阶段不再检验
+        Point point = pointRepository.findByUserId(userId);
+        // 在实际业务中，注意并发问题
+        point.setValue(point.getValue() + increment);
+        pointRepository.save(point);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void cancelIncr(TransactionContext context, Long userId, Long increment) {
+        // try操作并没有修改东西，撤销操作无需任何操作
+    }
 }

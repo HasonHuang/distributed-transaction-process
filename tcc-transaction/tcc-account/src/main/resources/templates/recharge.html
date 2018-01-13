@@ -1,0 +1,18 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta content="text/html;charset=UTF-8"/>
+        <title>充值页面</title>
+    </head>
+
+    <body>
+        <form class="login-form" action="/capitals/balance" method="post">
+            <label>
+                <input type="text" name="username" placeholder="Username"/>
+            </label>
+            <label>
+                <input type="text" name="amount" placeholder="Amount"/>
+            </label>
+            <input type="submit" value="充值"/>
+        </form>
+    </body>
+</html>
