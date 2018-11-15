@@ -9,6 +9,8 @@
 - reliable-message-transaction：可靠消息最终一致性的示例
 - tcc-transaction：TCC补偿性的示例
 
+> 待补充最大努力通知型
+
 ## 解决方案
 
 ### 1.可靠消息最终一致性
