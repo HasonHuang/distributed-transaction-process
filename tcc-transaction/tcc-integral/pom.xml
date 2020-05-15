@@ -20,7 +20,7 @@
         <tcc.version>1.1.5.2</tcc.version>
         <postgresql.version>42.1.1</postgresql.version>
         <druid.version>1.1.0</druid.version>
-        <jackson.version>2.9.7</jackson.version>
+        <jackson.version>2.11.0</jackson.version>
         <feign-httpclient.version>8.18.0</feign-httpclient.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
