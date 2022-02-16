@@ -19,7 +19,7 @@
         <rm-account.version>1.0-SNAPSHOT</rm-account.version>
         <rm-account-point.version>1.0-SNAPSHOT</rm-account-point.version>
         <rm-message.version>1.0-SNAPSHOT</rm-message.version>
-        <postgresql.version>42.1.1</postgresql.version>
+        <postgresql.version>42.3.3</postgresql.version>
         <druid.version>1.1.0</druid.version>
         <jackson.version>2.9.7</jackson.version>
         <feign-httpclient.version>8.18.0</feign-httpclient.version>
