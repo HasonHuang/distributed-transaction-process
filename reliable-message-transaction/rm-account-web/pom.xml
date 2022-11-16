@@ -18,7 +18,7 @@
         <ms-core.version>1.0-SNAPSHOT</ms-core.version>
         <rm-account.version>1.0-SNAPSHOT</rm-account.version>
         <rm-message.version>1.0-SNAPSHOT</rm-message.version>
-        <jackson.version>2.9.7</jackson.version>
+        <jackson.version>2.12.7.1</jackson.version>
         <feign-httpclient.version>8.18.0</feign-httpclient.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
