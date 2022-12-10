@@ -12,7 +12,7 @@
         <ms-core.version>1.0-SNAPSHOT</ms-core.version>
         <rm-account-api.version>1.0-SNAPSHOT</rm-account-api.version>
         <jpa.version>1.0.0.Final</jpa.version>
-        <spring.version>4.3.5.RELEASE</spring.version>
+        <spring.version>6.0.0</spring.version>
 
         <!-- Plugin的属性 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
