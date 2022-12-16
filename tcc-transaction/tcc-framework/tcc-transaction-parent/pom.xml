@@ -34,7 +34,7 @@
 
 
     <properties>
-        <springframework.version>4.3.5.RELEASE</springframework.version>
+        <springframework.version>5.2.20.RELEASE</springframework.version>
 
         <java.src.version>1.6</java.src.version>
         <java.target.version>1.6</java.target.version>
